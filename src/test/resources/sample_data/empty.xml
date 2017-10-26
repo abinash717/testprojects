@@ -1,0 +1,7 @@
+<EmailAddresses>
+         <EmailAddress Contact="true" Type="Business">gkarnati@abc.com</EmailAddress>
+         <EmailAddress Contact="false" Type="Personal">a@bbc.com</EmailAddress>
+         <EmailAddress Contact="false" Type="Personal">xx@cc.co</EmailAddress>
+         <EmailAddress Contact="true" Type="Personal">a@x.co</EmailAddress>
+         <EmailAddress Contact="false" Type="Personal">a@d.co</EmailAddress>
+   </EmailAddresses>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
+    <flow name="valid_emailFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/email" doc:name="HTTP"/>
+        <set-payload value="&lt;EmailAddresses&gt;
+         &lt;EmailAddress Contact=&quot;true&quot; Type=&quot;Business&quot;&gt;gkarnati@abc.com&lt;/EmailAddress&gt;
+         &lt;EmailAddress Contact=&quot;false&quot; Type=&quot;Personal&quot;&gt;a@bbc.com&lt;/EmailAddress&gt;
+         &lt;EmailAddress Contact=&quot;false&quot; Type=&quot;Personal&quot;&gt;xx@cc.co&lt;/EmailAddress&gt;
+         &lt;EmailAddress Contact=&quot;true&quot; Type=&quot;Personal&quot;&gt;a@x.co&lt;/EmailAddress&gt;
+         &lt;EmailAddress Contact=&quot;false&quot; Type=&quot;Personal&quot;&gt;a@d.co&lt;/EmailAddress&gt;
+   &lt;/EmailAddresses&gt;" mimeType="application/xml" doc:name="Set Payload"/>
+        <set-variable variableName="payloadData" value="#[payload]" doc:name="Variable"/>
+        <logger message="Intial value  :#[payload]  Variable value: #[flowVars.payloadData]" level="INFO" doc:name="Logger"/>
+        <dw:transform-message doc:name="Transform Message" metadata:id="c74a98a8-2a35-4a9d-ae20-cd8708fc2f4d">
+            <dw:input-payload doc:sample="sample_data\empty.xml" />
+            <dw:set-payload><![CDATA[%dw 1.0
+%input payload application/xml
+%output application/json
+---
+
+ //payload.EmailAddresses map {
+ 	//Email: $ when ($.@Contact) otherwise ""
+ //}
+ // payload.EmailAddresses
+		//filter ($.@Contact == "true")  map { Email :$ }
+ payload.EmailAddresses
+		filter ($.@Contact == "true")  map $]]></dw:set-payload>
+        </dw:transform-message>
+        <set-variable variableName="newValue" value="#[payload]" doc:name="Variable"/>
+        <logger message="Transformed Data :#[payload]" level="INFO" doc:name="Logger"/>
+    </flow>
+</mule>

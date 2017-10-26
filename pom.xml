@@ -106,11 +106,12 @@
 			<scope>provided</scope>
 		</dependency>
 		<!-- Mule Transports -->
-		<dependency>
+		<!--<dependency>
 			<groupId>org.mule.transports</groupId>
 			<artifactId>mule-transport-file</artifactId>
 			<version>${mule.version}</version>
-		</dependency>
+			<scope>provided</scope>
+		</dependency>-->
 		<dependency>
 			<groupId>org.mule.transports</groupId>
 			<artifactId>mule-transport-http</artifactId>

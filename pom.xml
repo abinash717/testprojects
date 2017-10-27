@@ -137,7 +137,7 @@
 			<scope>provided</scope>
 		</dependency>
 		<!-- Mule Modules -->
-		<dependency>
+		<!--<dependency>
 			<groupId>org.mule.modules</groupId>
 			<artifactId>mule-module-scripting</artifactId>
 			<version>${mule.version}</version>

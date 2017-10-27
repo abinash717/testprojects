@@ -150,7 +150,7 @@
 			<scope>provided</scope>
 		</dependency>-->
 		<!-- for testing -->
-		<dependency>
+		<!--<dependency>
 			<groupId>org.mule.tests</groupId>
 			<artifactId>mule-tests-functional</artifactId>
 			<version>${mule.version}</version>
@@ -173,7 +173,7 @@
             <artifactId>munit-runner</artifactId>
             <version>${munit.version}</version>
             <scope>test</scope>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
 	<repositories>
